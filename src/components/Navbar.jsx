@@ -5,14 +5,15 @@ export const Navbar = () => {
   const [isShown, setIsShown] = useState(false)
 
   const toggleNav = (state) => {
-    setIsShown(state)
     const body = document.querySelector("body")
 
-    if (body.classList.contains('fixed')) {
-      body.classList.remove('fixed')
-    } else {
+
+    if (!body.classList.contains('fixed')) {
       body.classList.add('fixed')
+    } else {
+      body.classList.remove('fixed')
     }
+    setIsShown(state)
   }
 
   return (
@@ -36,7 +37,7 @@ export const Navbar = () => {
       </li>
     </ul>
   
-    <div onClick={() => toggleNav(!isShown)} class="cursor-pointer pr-4 z-10 text-gray-500 md:hidden">
+    <div onClick={() => toggleNav(!isShown)} class="cursor-pointer pr-4 z-10 text-gray-500 md:hidden" id={"menu-icon"}>
       {isShown ? <FaTimes size={30} class={"text-white"}/> : <FaBars size={30} />}
     </div>
 
