@@ -1,0 +1,46 @@
+---
+import { Navbar } from "../components/Navbar.jsx";
+import SocialLinks from "../components/SocialLinks.astro";
+const { title } = Astro.props;
+import "../pages/styles.css";
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-[url('/img/bg.jpg')] bg-fixed font-['rajdhani']">
+    <Navbar client:load />
+    <slot />
+    <SocialLinks />
+    <script>
+      const myNav = document.querySelector("nav");
+      const ul = document.querySelector("#menu-desktop");
+      window.onscroll = function () {
+        "use strict";
+        if (
+          document.body.scrollTop >= 200 ||
+          document.documentElement.scrollTop >= 200
+        ) {
+          myNav.classList.add("bg-gray-500/75");
+          myNav.classList.add("text-white");
+          ul.classList.add("text-white");
+          myNav.classList.remove("bg-transparent");
+          myNav.classList.remove("text-gray-500");
+          ul.classList.remove("text-gray-500");
+        } else {
+          myNav.classList.add("bg-transparent");
+          myNav.classList.add("text-gray-500");
+          ul.classList.add("text-gray-500");
+          myNav.classList.remove("bg-gray-500/75");
+          myNav.classList.remove("text-white");
+          ul.classList.remove("text-white");
+        }
+      };
+    </script>
+  </body>
+</html>

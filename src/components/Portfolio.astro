@@ -1,0 +1,78 @@
+---
+import { Icon } from "astro-icon";
+const projects = await Astro.glob("../pages/projects/*.md");
+---
+
+<section
+  id="portfolio"
+  class="bg-gradient-to-b w-full text-gray-500 md:h-screen"
+>
+  <div
+    class="max-w-screen-lg p-4 mx-auto flex flex-col justify-center w-full h-full"
+  >
+    <div class="pb-8">
+      <p class="text-4xl font-bold inline border-b-4 border-gray-500">
+        Portafolio
+      </p>
+      <p class="py-6 font-bold">Estos son algunos de mis proyectos.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-8 px-12 sm:px-0">
+      {
+        projects.map((project) => {
+          return (
+            <article class="shadow-sm shadow-gray-500 duration-200 hover:scale-105">
+              <img
+                class="rounded-t-md"
+                src={project.frontmatter.image}
+                alt={project.frontmatter.title}
+              />
+              <div class="flex items-center justify-evenly bg-black bg-opacity-25">
+                {project.frontmatter.demo && (
+                  <a
+                    href={project.frontmatter.apiSourceCode}
+                    class="group px-6 py-3 m-4 duration-200 hover:scale-105"
+                  >
+                    <Icon name="mdi:earth" size={30} />
+                    <span class="opacity-0 group-hover:opacity-100 duration-200 absolute text-center right-[1.2rem] text-white">
+                      Demo
+                    </span>
+                  </a>
+                )}
+
+                {project.frontmatter.apiSourceCode && (
+                  <a
+                    href={project.frontmatter.apiSourceCode}
+                    class="group px-6 py-3 m-4 duration-200 hover:scale-105"
+                  >
+                    <Icon name="mdi:source-branch" size={30} />
+                    <span class="opacity-0 group-hover:opacity-100 duration-200 absolute text-center right-[0.8rem] text-white">
+                      Backend
+                    </span>
+                  </a>
+                )}
+
+                {project.frontmatter.frontSourceCode && (
+                  <a
+                    href={project.frontmatter.frontSourceCode}
+                    class="group px-6 py-3 m-4 duration-200 hover:scale-105"
+                  >
+                    <Icon name="mdi:source-branch" size={30} />
+                    <span class="opacity-0 group-hover:opacity-100 duration-200 absolute text-center right-[0.8rem] text-white">
+                      Frontend
+                    </span>
+                  </a>
+                )}
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  [astro-icon] {
+    color: white;
+  }
+</style>
