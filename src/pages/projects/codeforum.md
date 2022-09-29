@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 slug: "codeforum"
 title: "Codeforum"
 apiSourceCode: "https://github.com/dserranoc/codeforum-api"

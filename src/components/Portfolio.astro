@@ -12,7 +12,7 @@ const projects = await Astro.glob("../pages/projects/*.md");
       <p class="text-4xl font-bold inline border-b-4 border-gray-500">
         Portafolio
       </p>
-      <p class="py-6 font-bold">Estos son algunos de mis proyectos.</p>
+      <p class="py-6 font-bold text-xl">Estos son algunos de mis proyectos.</p>
     </div>
     <div
       class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-center py-8 px-12 sm:px-0"
@@ -20,19 +20,19 @@ const projects = await Astro.glob("../pages/projects/*.md");
       {
         projects.map((project) => {
           return (
-            <article class="shadow-sm shadow-gray-500">
+            <article class="rounded-b-md shadow-lg shadow-gray-500">
               <img
                 class="rounded-t-md"
                 src={project.frontmatter.image}
                 alt={project.frontmatter.title}
               />
-              <div class="flex items-center justify-evenly bg-black bg-opacity-25">
+              <div class="flex items-center justify-evenly bg-gray-500/50 rounded-b-md">
                 {project.frontmatter.demo && (
                   <a
                     href={project.frontmatter.apiSourceCode}
                     class="group pt-4 duration-200 hover:scale-105 flex flex-col items-center"
                   >
-                    <Icon name="mdi:earth" size={20} />
+                    <Icon name="mdi:earth" size={25} />
                     <span class="opacity-0 group-hover:opacity-100 duration-200 text-center text-xs md:text-base text-white">
                       Demo
                     </span>
@@ -44,9 +44,21 @@ const projects = await Astro.glob("../pages/projects/*.md");
                     href={project.frontmatter.apiSourceCode}
                     class="group pt-4 duration-200 hover:scale-105 flex flex-col items-center"
                   >
-                    <Icon name="mdi:source-branch" size={20} />
+                    <Icon name="mdi:source-branch" size={25} />
                     <span class="opacity-0 group-hover:opacity-100 duration-200 text-center text-xs md:text-base text-white">
                       Backend
+                    </span>
+                  </a>
+                )}
+
+                {project.frontmatter.sourceCode && (
+                  <a
+                    href={project.frontmatter.sourceCode}
+                    class="group pt-4 duration-200 hover:scale-105 flex flex-col items-center"
+                  >
+                    <Icon name="mdi:source-branch" size={25} />
+                    <span class="opacity-0 group-hover:opacity-100 duration-200 text-center text-xs md:text-base text-white">
+                      Código
                     </span>
                   </a>
                 )}
@@ -56,7 +68,7 @@ const projects = await Astro.glob("../pages/projects/*.md");
                     href={project.frontmatter.frontSourceCode}
                     class="group pt-4 duration-200 hover:scale-105 flex flex-col items-center"
                   >
-                    <Icon name="mdi:source-branch" size={20} />
+                    <Icon name="mdi:source-branch" size={25} />
                     <span class="opacity-0 group-hover:opacity-100 duration-200 text-center text-xs md:text-base text-white">
                       Frontend
                     </span>

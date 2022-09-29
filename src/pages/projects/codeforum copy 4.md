@@ -1,11 +1,9 @@
 ---
 draft: true
-slug: "codeforum"
-title: "Codeforum"
-demo: true
-apiSourceCode: "https://github.com/dserranoc/codeforum-api"
-frontSourceCode: "https://github.com/dserranoc/foro-angular"
-image: "https://danielserranocobos.com/img/portfolio/codeforum.png"
+slug: "phpblog"
+title: "PHPBlog"
+sourceCode: "https://github.com/dserranoc/PHPBlog"
+image: "https://danielserranocobos.com/img/portfolio/phpblog.png"
 ---
 
-CODEFORUM es un foro para programadores tipo Stackoverflow. Es una página web SPA creada con Angular y consume una API REST creada con en NodeJS usando como base de datos MongoDB.
+PHPBLOG es un blog de videojuegos realizado exclusivamente en PHP puro y MySQL como gestor de base de datos.
