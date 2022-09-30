@@ -3,7 +3,7 @@ import avatarImage from "/img/avatar.png";
 import { Icon } from "astro-icon";
 ---
 
-<header class="h-screen w-full">
+<header class="h-screen w-full" id="particles-js-header">
   <div
     class="max-w-screen-lg mx-auto flex flex-col items-center justify-center h-full px-4 md:flex-row"
   >
@@ -36,3 +36,11 @@ import { Icon } from "astro-icon";
     </div>
   </div>
 </header>
+
+<script src="/js/particles.min.js" is:inline></script>
+<script>
+  /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+  particlesJS.load("particles-js-header", "/js/particles.json", function () {
+    console.log("callback - particles-js config loaded");
+  });
+</script>

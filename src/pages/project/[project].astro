@@ -1,19 +1,120 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
+import Footer from "../../components/Footer.astro";
+import { Navbar } from "../../components/Navbar.jsx";
+import Badge from "../../components/Badge.astro";
+import { Icon } from "astro-icon";
+
 export async function getStaticPaths() {
-  let projects = await Astro.glob("../projects/*.md");
+  let projects = await Astro.glob("../../content/projects/*.md");
   return projects.map((project) => ({
     params: { project: project.frontmatter.slug },
     props: { project },
   }));
 }
 
-const { Content, frontmatter } = Astro.props.project;
+const { frontmatter, rawContent } = Astro.props.project;
 
-const { title, image, slug } = frontmatter;
+const {
+  title,
+  image,
+  slug,
+  techs,
+  sourceCode,
+  apiSourceCode,
+  frontSourceCode,
+  demo,
+} = frontmatter;
 ---
 
 <MainLayout title={title}>
-  <img src={image} alt={slug} />
-  <Content />
+  <section class="h-screen w-full">
+    <div
+      class="max-w-screen-lg mx-auto flex flex-col items-center justify-center h-full px-4 md:flex-row"
+    >
+      <div class="flex flex-col justify-center text-center md:pr-10">
+        <h2
+          class="text-4xl sm:text-7xl font-bold text-gray-500 border-b-4 pt-2 border-gray-500"
+        >
+          {title}
+        </h2>
+        <div class="grid grid-cols-4 sm:grid-cols-4 text-center">
+          {
+            techs?.map((tech) => {
+              return <Badge text={tech} />;
+            })
+          }
+        </div>
+        <p class="text-gray-500 py-4 max-w-md font-bold text-xl">
+          {rawContent}
+        </p>
+        <div class="pb-2">
+          {
+            demo && (
+              <p class="text-gray-500 max-w-md font-bold text-xl underline">
+                <Icon name="mdi:earth" size={25} class="inline" />
+                <a
+                  href={demo}
+                  target="_blank"
+                  rel="nofollow noreferrer noopener"
+                >
+                  URL del proyecto
+                </a>
+              </p>
+            )
+          }
+          {
+            sourceCode && (
+              <p class="text-gray-500 max-w-md font-bold text-xl underline">
+                <Icon name="mdi:source-branch" size={25} class="inline" />
+                <a
+                  href={sourceCode}
+                  target="_blank"
+                  rel="nofollow noreferrer noopener"
+                >
+                  Código fuente
+                </a>
+              </p>
+            )
+          }
+          {
+            apiSourceCode && (
+              <p class="text-gray-500 max-w-md font-bold text-xl underline">
+                <Icon name="mdi:source-branch" size={25} class="inline" />
+                <a
+                  href={apiSourceCode}
+                  target="_blank"
+                  rel="nofollow noreferrer noopener"
+                >
+                  Código fuente de la API
+                </a>
+              </p>
+            )
+          }
+          {
+            frontSourceCode && (
+              <p class="text-gray-500 max-w-md font-bold text-xl underline">
+                <Icon name="mdi:source-branch" size={25} class="inline" />
+                <a
+                  href={frontSourceCode}
+                  target="_blank"
+                  rel="nofollow noreferrer noopener"
+                >
+                  Código fuente del frontend
+                </a>
+              </p>
+            )
+          }
+        </div>
+      </div>
+      <div class="md:pl-10">
+        <img
+          src={image}
+          alt={`${title} screenshot`}
+          class="rounded-xl mx-auto w-2/3 md:w-full shadow-md shadow-gray-500 duration-500 hover:scale-105"
+        />
+      </div>
+    </div>
+  </section>
+  <Footer />
 </MainLayout>

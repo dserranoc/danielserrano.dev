@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon";
 import Section from "./Section.astro";
-const projects = await Astro.glob("../pages/projects/*.md");
+const projects = await Astro.glob("../content/projects/*.md");
 ---
 
 <Section id="portfolio" class="w-full text-gray-500 md:h-screen">
@@ -12,7 +12,10 @@ const projects = await Astro.glob("../pages/projects/*.md");
       <p class="text-4xl font-bold inline border-b-4 border-gray-500">
         Portafolio
       </p>
-      <p class="py-6 font-bold text-xl">Estos son algunos de mis proyectos.</p>
+      <p class="py-6 font-bold text-xl">
+        Estos son algunos de mis proyectos. Puedes hacer click en ellos para
+        conocer más acerca de su desarrollo.
+      </p>
     </div>
     <div
       class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-center py-8 px-12 sm:px-0"
@@ -20,13 +23,16 @@ const projects = await Astro.glob("../pages/projects/*.md");
       {
         projects.map((project) => {
           return (
-            <article class="rounded-b-md shadow-lg shadow-gray-500">
-              <img
-                class="rounded-t-md"
-                src={project.frontmatter.image}
-                alt={project.frontmatter.title}
-              />
-              <div class="flex items-center justify-evenly bg-gray-500/50 rounded-b-md">
+            <article class="rounded-md shadow-md shadow-gray-500 duration-500 hover:scale-105">
+              <a href={`/project/${project.frontmatter.slug}`}>
+                <img
+                  class="rounded-md"
+                  src={project.frontmatter.image}
+                  alt={project.frontmatter.title}
+                />
+              </a>
+
+              <div class="items-center justify-evenly bg-gray-500/50 rounded-b-md hidden">
                 {project.frontmatter.demo && (
                   <a
                     href={project.frontmatter.apiSourceCode}
@@ -82,6 +88,13 @@ const projects = await Astro.glob("../pages/projects/*.md");
     </div>
   </div>
 </Section>
+
+<script>
+  /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+  particlesJS.load("portfolio", "/js/particles.json", function () {
+    console.log("callback - particles-js config loaded");
+  });
+</script>
 
 <style>
   [astro-icon] {
