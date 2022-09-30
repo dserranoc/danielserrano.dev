@@ -4,7 +4,7 @@ slug: "codeforum"
 title: "Codeforum"
 apiSourceCode: "https://github.com/dserranoc/codeforum-api"
 frontSourceCode: "https://github.com/dserranoc/foro-angular"
-image: "https://danielserranocobos.com/img/portfolio/codeforum.png"
+image: "/img/projects/codeforum.png"
 techs: ["HTML", "Angular", "NodeJS", "MongoDB"]
 demo: true
 ---
