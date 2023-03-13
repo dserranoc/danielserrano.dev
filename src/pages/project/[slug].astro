@@ -1,0 +1,57 @@
+---
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+import { projectSchema } from "src/lib/markdoc/frontmatter.schema";
+import { readOne, readAll } from "../../lib/markdoc/read";
+import Renderer from "../../components/Renderer.astro";
+import BlogPostMeta from "../../components/BlogPostMeta.astro";
+import { SITE_URL } from "../../config";
+
+export async function getStaticPaths() {
+  const posts = await readAll({
+    directory: "projects",
+    frontmatterSchema: projectSchema,
+  });
+
+  return posts.map((post) => {
+    return { params: { slug: post.slug } };
+  });
+}
+
+const { slug } = Astro.params;
+if (typeof slug !== "string") {
+  throw Error(`slug should be string. Received: ${slug}`);
+}
+
+const { content, frontmatter } = await readOne({
+  directory: "projects",
+  slug,
+  frontmatterSchema: projectSchema,
+});
+
+const ogImageAbsoluteUrl = frontmatter.image
+  ? new URL(frontmatter.image, SITE_URL).toString()
+  : undefined;
+---
+
+<ProjectLayout
+  title={frontmatter.title}
+  date={frontmatter.date}
+  techs={frontmatter.technologies}
+  image={frontmatter.image}
+  url={frontmatter.url}
+  backendSource={frontmatter.backendSource}
+  frontendSource={frontmatter.frontendSource}
+  sourceCode={frontmatter.sourceCode}
+>
+  <BlogPostMeta
+    title={frontmatter.title}
+    description={frontmatter.description}
+    publishDate={frontmatter.date.toISOString()}
+    pagePath={`/blog/${slug}`}
+    ogImageAbsoluteUrl={ogImageAbsoluteUrl}
+    slot="meta"
+  />
+  <Renderer content={content} slot="content" />
+
+  {frontmatter.title}
+</ProjectLayout>

@@ -1,0 +1,178 @@
+---
+/* 
+  This layout is used in pages that render markdoc content
+  - pages/project/[slug].astro
+*/
+
+// Import the global.css file here so that it is included on
+import "../styles/global.css";
+
+import GoogleFont from "./GoogleFont.astro";
+import FontAwesome from "./FontAwesome.astro";
+import ThemeScript from "./ThemeScript.astro";
+import Favicon from "./Favicon.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { Icons } from "src/components/Icons";
+
+export interface Props {
+  title: string;
+  date: Date;
+  techs: string[];
+  image: string;
+  backendSource?: string;
+  frontendSource?: string;
+  url?: string;
+  sourceCode?: string;
+}
+
+const {
+  title,
+  date,
+  techs,
+  image,
+  backendSource,
+  frontendSource,
+  url,
+  sourceCode,
+} = Astro.props;
+const formattedDate = new Date(date).toLocaleDateString("es-es", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+---
+
+<!DOCTYPE html>
+<html class="theme-bubblegum" lang="es">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content="Blogster" />
+    <Favicon />
+    <slot name="meta" />
+    <GoogleFont />
+    <ThemeScript />
+    <FontAwesome />
+  </head>
+
+  <body class="max-w-3xl mx-auto min-h-screen px-6 sm:px-8">
+    <Header />
+    <main id="main">
+      <section class="blog-post prose max-w-none prose-bubblegum">
+        <h1 class="m-0 mb-[0.25em]">
+          <span
+            class="pl-6 relative block leading-[150%] after:absolute after:content-[''] after:w-2 after:h-full after:top-0 after:left-0 after:bg-primary-blue"
+          >
+            {title}
+          </span>
+        </h1>
+        <div class="sm:flex mb-[1em] justify-between">
+          <time class="block text-text-muted mb-2 sm:mb-0">{formattedDate}</time
+          >
+          <div class="grid grid-flow-col gap-2">
+            {techs.map((tech) => <Icons name={tech.toLowerCase()} />)}
+          </div>
+        </div>
+        <div class="project-links flex flex-col p-2 border-md">
+          {
+            url && (
+              <span>
+                URL:
+                <a
+                  class="unset
+                      transition-[background-size] duration-300 
+                      bg-gradient-to-r bg-left-bottom bg-no-repeat
+                      bg-[length:0%_55%] hover:bg-[length:100%_55%] dark:bg-[length:0%_2px] hover:dark:bg-[length:100%_2px]
+                      from-primary-blue to-primary-blue dark:from-primary-blue dark:to-primary-blue"
+                  href={url}
+                  target="_blank"
+                >
+                  {url}
+                </a>
+                <i class="ml-1 mr-1 text-[12px] pb-2 fa-solid fa-up-right-from-square" />
+              </span>
+            )
+          }
+          {
+            sourceCode && (
+              <span>
+                Código fuente:
+                <a
+                  class="unset
+                      transition-[background-size] duration-300 
+                      bg-gradient-to-r bg-left-bottom bg-no-repeat
+                      bg-[length:0%_55%] hover:bg-[length:100%_55%] dark:bg-[length:0%_2px] hover:dark:bg-[length:100%_2px]
+                      from-primary-blue to-primary-blue dark:from-primary-blue dark:to-primary-blue"
+                  href={sourceCode}
+                  target="_blank"
+                >
+                  {sourceCode}
+                </a>
+                <i class="ml-1 mr-1 text-[12px] pb-2 fa-solid fa-up-right-from-square" />
+              </span>
+            )
+          }
+          {
+            backendSource && (
+              <span>
+                Backend:
+                <a
+                  class="unset
+                      transition-[background-size] duration-300 
+                      bg-gradient-to-r bg-left-bottom bg-no-repeat
+                      bg-[length:0%_55%] hover:bg-[length:100%_55%] dark:bg-[length:0%_2px] hover:dark:bg-[length:100%_2px]
+                      from-primary-blue to-primary-blue dark:from-primary-blue dark:to-primary-blue"
+                  href={backendSource}
+                  target="_blank"
+                >
+                  {backendSource}
+                </a>
+                <i class="ml-1 mr-1 text-[12px] pb-2 fa-solid fa-up-right-from-square" />
+              </span>
+            )
+          }
+          {
+            frontendSource && (
+              <span>
+                Frontend:
+                <a
+                  class="unset
+                      transition-[background-size] duration-300 
+                      bg-gradient-to-r bg-left-bottom bg-no-repeat
+                      bg-[length:0%_55%] hover:bg-[length:100%_55%] dark:bg-[length:0%_2px] hover:dark:bg-[length:100%_2px]
+                      from-primary-blue to-primary-blue dark:from-primary-blue dark:to-primary-blue"
+                  href={frontendSource}
+                  target="_blank"
+                >
+                  {frontendSource}
+                </a>
+                <i class="ml-1 mr-1 text-[12px] pb-2 fa-solid fa-up-right-from-square" />
+              </span>
+            )
+          }
+        </div>
+        <div class="featured-image">
+          <img src={image} alt={title} class="rounded-md shadow-md" />
+        </div>
+        <slot name="content" />
+      </section>
+    </main>
+    <Footer />
+    <style>
+      body {
+        display: grid;
+        grid-template-areas:
+          "header"
+          "main"
+          "footer";
+        grid-template-rows: 5rem minmax(0, 1fr) 5rem;
+        grid-template-columns: minmax(0, 1fr);
+      }
+      main {
+        grid-area: main;
+      }
+    </style>
+  </body>
+</html>
